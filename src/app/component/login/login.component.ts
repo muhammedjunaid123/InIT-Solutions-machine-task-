@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { AuthServiceService } from '../../service/auth-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class LoginComponent implements OnInit {
 
-  constructor(private _fb: FormBuilder, private _toastr: ToastrService) {
+  constructor(private _fb: FormBuilder, private _toastr: ToastrService, private _auth_service: AuthServiceService,private _router:Router) {
 
   }
   user_form!: FormGroup
@@ -28,7 +30,17 @@ export class LoginComponent implements OnInit {
       this._toastr.error('enter the correct password it should atleast 6 characters')
       return
     }
-   this._toastr.success('save','login successful')
+
+         console.log(this.user_form.value);
+         
+    this._auth_service.login(this.user_form.value).subscribe({
+      next: (res:any) => {
+        console.log(res);localStorage.setItem('authToken',res.token)
+        this._toastr.success('save', 'login successful')
+        this._router.navigate(['/chat'])
+      }
+    })
+
 
   }
 }
