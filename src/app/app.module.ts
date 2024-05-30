@@ -10,6 +10,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/http.interceptor';
+import {  } from 'socket.io-client';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
